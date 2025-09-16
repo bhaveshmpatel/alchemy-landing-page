@@ -1,5 +1,6 @@
 "use client";
 
+import { GradientButton } from "@/components/GradientButton";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -40,7 +41,7 @@ const Navbar = () => {
           </div>
           <div className="hidden xl:flex items-center gap-2">
             <TransparentButton title="Contact sales" />
-            <GradientButton title="Sign In" />
+            <GradientButton title="Sign In" size="sm" />
           </div>
 
           <div className="z-30 flex items-center xl:hidden">
@@ -57,15 +58,26 @@ const Navbar = () => {
             </button>
           </div>
         </div>
-        {open && <div className="bg-white absolute inset-0 top-[54px] z-20 h-[100dvh] w-screen xl:hidden">
-          <div className="flex flex-col m-6 overflow-y-scroll scroll-smooth">
-            <div className="flex divide-y divide-gray-100 flex-col h-full">
-              {[...NavButtons, { title: "Pricing" }].map((button, idx) => (
-                <MenuNavButton key={idx} title={button.title} />
-              ))}
+        {open && (
+          <div className="bg-white absolute inset-0 top-[54px] z-20 h-[100dvh] w-screen xl:hidden">
+            <div className="flex flex-col m-6 h-full">
+              {/* Menu Links (scrollable if too many) */}
+              <div className="flex-1 overflow-y-auto divide-y divide-gray-100">
+                {[...NavButtons, { title: "Pricing" }].map((button, idx) => (
+                  <MenuNavButton key={idx} title={button.title} />
+                ))}
+              </div>
+
+              {/* Buttons pinned to bottom */}
+              <div className="mt-auto flex flex-col items-center mb-25 gap-2">
+                <span className="text-gray-900 bg-transparent text-center hover:bg-gray-100 w-full tracking-tight font-semibold py-2">Contact sales</span>
+                <div className="w-full">
+                  <GradientButton title="Sign in" size="sm" />
+                </div>
+              </div>
             </div>
           </div>
-        </div>}
+        )}
       </div>
     </div>
   );
@@ -89,14 +101,6 @@ function NavButton({ title }: IButton) {
 function TransparentButton({ title }: IButton) {
   return (
     <div className="flex items-center tracking-normal text-gray-950 bg-transparent duration-200 rounded-lg mx-auto text-nowrap px-2 py-1.5 text-base font-[550] transition-all hover:bg-gray-100">
-      {title}
-    </div>
-  );
-}
-
-function GradientButton({ title }: IButton) {
-  return (
-    <div className="flex h-full flex-row items-center justify-center gap-2 rounded-lg transition-all font-semibold leading-none bg-linear-to-br from-violet-600 via-blue-700 to-cyan-500 text-white-950 hover:bg-gradient-primary-blue-hover hover:shadow-gray-lg text-sm px-4 py-3 whitespace-nowrap">
       {title}
     </div>
   );
